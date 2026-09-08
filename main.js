@@ -1,6 +1,10 @@
 const fileInput = document.getElementById('file-upload');
 const uploadArea = document.querySelector('.upload-area');
 const fileListContainer = document.getElementById('file-list-container');
+const locationLink = document.querySelector("#location a");
+const locationText = locationLink.innerText.split(' ').join("%20");
+locationLink.href = `https://www.google.com/maps/search/?api=1&query=${locationText}`;
+
 
 // Store selected files in an array
 let selectedFiles = [];
