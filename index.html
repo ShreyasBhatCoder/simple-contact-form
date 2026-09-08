@@ -29,9 +29,18 @@
             <h1>Contact Us</h1>
             <p>We'd love to hear from you. Fill out the form below and our team will get back to you shortly.</p>
             <div class="basic-details">
-                <div id="email"><span class="material-symbols-outlined">mail</span>example@company.com</div>
-                <div id="phone"><span class="material-symbols-outlined">call</span>+1 415-555-0123</div>
-                <div id="location"><span class="material-symbols-outlined">location_on</span>123 Tech Park Drive</div>
+                <div id="email">
+                    <span class="material-symbols-outlined">mail</span>
+                    <a href="mailto:bhatshreyas2002@gmail.com">example@company.com</a>
+                </div>
+                <div id="phone">
+                    <span class="material-symbols-outlined">call</span>
+                    <a href="tel:+919820819316">+1 415-555-0123</a>
+                </div>
+                <div id="location">
+                    <span class="material-symbols-outlined">location_on</span>
+                    <a href="https://google.com" target="_blank" rel="noopener noreferrer">123 Tech Park Drive</a>
+                </div>
             </div>
         </div>
 
@@ -77,7 +86,7 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-text material-symbols-outlined" id="basic-addon1">globe</span>
-                            <input type="text" id="website" name="website" placeholder=" " />
+                            <input type="text" id="website" name="website" placeholder=" " pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$" title="Please enter a valid URL (e.g., example.com or https://example.com)" />
                             <label for="website">Website</label>
                         </div>
                     </div>

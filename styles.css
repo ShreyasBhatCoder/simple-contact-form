@@ -122,6 +122,11 @@ body {
     font-size: 17px;
 }
 
+.header a {
+    color: white;
+    text-decoration: none;
+}
+
 .basic-details {
     display: flex;
     flex-direction: row;
