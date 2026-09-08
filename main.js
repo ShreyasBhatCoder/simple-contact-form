@@ -96,6 +96,17 @@ function updateUI() {
 
     Array.from(forms).forEach(form => {
         const validateField = (target) => {
+            if (target.id === 'website') {
+                const val = target.value.trim();
+                // Validates domain formats with or without protocol (e.g., example.com, https://example.com/path)
+                const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/;
+                if (val !== '' && !urlRegex.test(val)) {
+                    target.setCustomValidity("Please enter a valid website URL.");
+                } else {
+                    target.setCustomValidity("");
+                }
+            }
+
             if (!target.willValidate) return;
 
             if (target.checkValidity()) {
@@ -117,6 +128,11 @@ function updateUI() {
         });
 
         form.addEventListener('submit', event => {
+            // Validate all fields including custom validations like website before checking validity
+            Array.from(form.elements).forEach(element => {
+                validateField(element);
+            });
+
             if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();

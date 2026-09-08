@@ -266,9 +266,9 @@ body {
 }
 
 .input-group input:focus,
-.input-group select:focus {
-    border-bottom: 1px solid var(--primary-color);
-    border-top: 1px solid var(--primary-color);
+.input-group select:focus,
+.input-group textarea:focus {
+    border-color: var(--primary-color);
     box-shadow: 0 0 0 1px var(--primary-color);
     z-index: 2;
     border-left: none;
@@ -285,7 +285,7 @@ body {
     color: var(--text-muted);
     font-size: 14px;
     pointer-events: none;
-    z-index: 4;
+    z-index: 10;
     transition: transform 0.2s ease, font-size 0.2s ease, color 0.2s ease, top 0.2s ease, left 0.2s ease, background-color 0.3s ease;
 }
 
@@ -520,6 +520,28 @@ body {
 .input-group>.is-invalid~.invalid-feedback,
 .was-validated .input-group> :invalid~.invalid-feedback {
     display: block;
+}
+
+/* Validation border & icon styling for invalid fields */
+.input-group:has(>.is-invalid)>.input-group-text,
+.was-validated .input-group:has(>:invalid)>.input-group-text {
+    border-color: #dc3545 !important;
+    color: #dc3545;
+}
+
+.input-group>.is-invalid,
+.was-validated .input-group> :invalid {
+    border-color: #dc3545 !important;
+}
+
+.input-group>.is-invalid:focus,
+.was-validated .input-group> :invalid:focus {
+    box-shadow: 0 0 0 1px #dc3545 !important;
+}
+
+.input-group>.is-invalid~label,
+.was-validated .input-group> :invalid~label {
+    color: #dc3545 !important;
 }
 
 .checkbox-item {
