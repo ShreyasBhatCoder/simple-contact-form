@@ -2,6 +2,7 @@ const fileInput = document.getElementById('file-upload');
 const uploadArea = document.querySelector('.upload-area');
 const fileListContainer = document.getElementById('file-list-container');
 const locationLink = document.querySelector("#location a");
+
 const locationText = locationLink.innerText.split(' ').join("%20");
 locationLink.href = `https://www.google.com/maps/search/?api=1&query=${locationText}`;
 
@@ -42,10 +43,12 @@ uploadArea.addEventListener('drop', (e) => {
 function handleFiles(files) {
     // Convert FileList to Array and add to our tracking array
     const filesArray = Array.from(files);
+    var totalFileSize = 0;
 
     filesArray.forEach(file => {
         // Optional: Format file size to human readable text
         const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+        totalFileSize += parseFloat(sizeInMB);
 
         // Create custom file object with unique ID
         const fileObj = {
@@ -57,6 +60,7 @@ function handleFiles(files) {
 
         selectedFiles.push(fileObj);
     });
+    console.log(`Total file size: ${totalFileSize.toFixed(2)} MB`);
 
     updateUI();
 }
