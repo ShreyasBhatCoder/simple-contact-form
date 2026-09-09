@@ -148,6 +148,7 @@ body {
     flex: 1 1 0;
     width: 100%;
     align-items: center;
+    cursor: pointer;
 }
 
 .basic-details>div>span {
@@ -247,6 +248,18 @@ body {
     color: var(--text-main);
     transition: background-color 0.3s ease, border-color 0.2s, box-shadow 0.2s, color 0.3s ease;
 }
+/* This expands the clickable zone to fill the entire #email div */
+.clickable-overlay::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1; /* Ensures it sits on top of all inner content */
+}
+
+/* Optional: Ensures the mouse pointer changes to a hand icon anywhere over the div */
 
 
 
@@ -396,7 +409,7 @@ body {
 .file-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
     background-color: var(--box-bg);
     border: 1px solid var(--box-border);
     padding: 10px 14px;
@@ -404,9 +417,13 @@ body {
 }
 
 .file-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
 }
 
 .file-name {
@@ -420,6 +437,11 @@ body {
     font-size: 11px;
     color: var(--text-muted);
 }
+
+.file-icon {
+    color: var(--text-muted) !important;
+}
+
 
 .remove-btn {
     background: transparent;

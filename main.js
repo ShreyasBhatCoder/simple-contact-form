@@ -1,5 +1,3 @@
-import { ICONS, fileTypeRegistry } from "./utils";
-
 const fileInput = document.getElementById('file-upload');
 const uploadArea = document.querySelector('.upload-area');
 const fileListContainer = document.getElementById('file-list-container');
@@ -12,6 +10,41 @@ locationLink.href = `https://www.google.com/maps/search/?api=1&query=${locationT
 // Store selected files in an array
 let selectedFiles = [];
 let totalFileSize = 0;
+
+// 1. Define the icons cleanly in one place
+const ICONS = {
+    image: 'image',
+    pdf: 'picture_as_pdf',
+    zip: 'folder_zip',
+    spreadsheet: 'table_chart',
+    doc: 'description',
+    fallback: 'insert_drive_file'
+};
+
+// 2. Map types to their respective icon key
+const fileTypeRegistry = {
+    // Images
+    '.jpg': ICONS.image, '.jpeg': ICONS.image, '.png': ICONS.image,
+    'image/jpeg': ICONS.image, 'image/png': ICONS.image,
+
+    // PDF
+    '.pdf': ICONS.pdf, 'application/pdf': ICONS.pdf,
+
+    // ZIP
+    '.zip': ICONS.zip, 'application/zip': ICONS.zip, 'application/x-zip-compressed': ICONS.zip,
+
+    // Spreadsheets
+    '.csv': ICONS.spreadsheet, 'text/csv': ICONS.spreadsheet,
+    '.xls': ICONS.spreadsheet, '.xlsx': ICONS.spreadsheet,
+    'application/vnd.ms-excel': ICONS.spreadsheet,
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ICONS.spreadsheet,
+
+    // Word Docs
+    '.doc': ICONS.doc, '.docx': ICONS.doc,
+    'application/msword': ICONS.doc,
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ICONS.doc
+};
+
 
 
 // 1. Listen for standard click-to-browse changes
@@ -85,6 +118,7 @@ function handleFiles(files) {
         // Create custom file object with unique ID
         const fileObj = {
             id: Symbol('file_id'),
+            icon: getFileIcon(file),
             name: file.name,
             size: `${sizeInMB} MB`,
             nativeFile: file
@@ -105,18 +139,29 @@ function updateUI() {
         fileItem.className = 'file-item';
         fileItem.style.marginBottom = '8px'; // Minor spacing fix
 
-        fileItem.innerHTML = `
-          <div class="file-info">
-            <span class="file-name">${fileObj.name}</span>
-            <span class="file-size">${fileObj.size}</span>
-          </div>
+        // Fetch the file icon
+        const fileIcon = document.createElement('span');
+        fileIcon.className = 'material-symbols-outlined file-icon';
+        fileIcon.innerText = fileObj.icon;
+
+        fileItem.appendChild(fileIcon);
+
+        const fileInfo = document.createElement("div");
+        fileInfo.className = "file-info";
+        fileInfo.innerHTML = `
+        <span class="file-name">${fileObj.name}</span>
+        <span class="file-size">${fileObj.size}</span>
         `;
+
+        fileItem.appendChild(fileInfo);
+
 
         // Create the delete button dynamically
         const removeBtn = document.createElement('button');
         removeBtn.className = 'remove-btn';
         removeBtn.setAttribute('aria-label', 'Remove file');
         removeBtn.innerHTML = '✕';
+
 
         // Delete handling logic
         removeBtn.addEventListener('click', () => {
