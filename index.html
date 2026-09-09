@@ -229,7 +229,16 @@
                         <div class="attachment-wrapper">
                             <div class="upload-area">
                                 <!-- Hidden Native File Input -->
-                                <input type="file" id="file-upload" class="file-input" multiple />
+                                <input 
+                                    type="file" 
+                                    id="file-upload" 
+                                    class="file-input" 
+                                    accept="
+                                        .jpg, .jpeg, .png, .pdf, .zip, application/zip, application/x-zip-compressed,
+                                        .csv, application/vnd.ms-excel, .xls, .xlsx, text/csv, .doc, .docx, application/msword
+                                    " 
+                                    multiple 
+                                />
 
                                 <!-- Styled Interface Linked to the Input -->
                                 <label for="file-upload" class="file-label">

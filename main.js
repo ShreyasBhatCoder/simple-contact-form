@@ -1,3 +1,5 @@
+import { ICONS, fileTypeRegistry } from "./utils";
+
 const fileInput = document.getElementById('file-upload');
 const uploadArea = document.querySelector('.upload-area');
 const fileListContainer = document.getElementById('file-list-container');
@@ -9,6 +11,8 @@ locationLink.href = `https://www.google.com/maps/search/?api=1&query=${locationT
 
 // Store selected files in an array
 let selectedFiles = [];
+let totalFileSize = 0;
+
 
 // 1. Listen for standard click-to-browse changes
 fileInput.addEventListener('change', (e) => {
@@ -39,15 +43,43 @@ uploadArea.addEventListener('drop', (e) => {
     handleFiles(files);
 });
 
+function getFileIcon(file) {
+    if (!file) return ICONS.fallback;
+
+    // O(1) Fast path: Direct MIME type lookup (e.g., "application/pdf")
+    if (file.type && fileTypeRegistry[file.type]) {
+        return fileTypeRegistry[file.type];
+    }
+
+    // Fallback path: Extract and check file extension (e.g., ".pdf")
+    const lastDot = file.name.lastIndexOf('.');
+    if (lastDot !== -1) {
+        const ext = file.name.slice(lastDot).toLowerCase();
+        if (fileTypeRegistry[ext]) {
+            return fileTypeRegistry[ext];
+        }
+    }
+
+    return ICONS.fallback;
+}
+
+
 // 4. Process and Save Files
 function handleFiles(files) {
     // Convert FileList to Array and add to our tracking array
     const filesArray = Array.from(files);
-    var totalFileSize = 0;
 
     filesArray.forEach(file => {
         // Optional: Format file size to human readable text
         const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+        console.log(file.type);
+
+        // Check if adding this file exceeds the 10MB limit
+        if (totalFileSize + parseFloat(sizeInMB) > 10) {
+            alert("File size exceeds the 10MB limit");
+            return; // Stop processing this file
+        }
+
         totalFileSize += parseFloat(sizeInMB);
 
         // Create custom file object with unique ID
@@ -60,7 +92,6 @@ function handleFiles(files) {
 
         selectedFiles.push(fileObj);
     });
-    console.log(`Total file size: ${totalFileSize.toFixed(2)} MB`);
 
     updateUI();
 }
